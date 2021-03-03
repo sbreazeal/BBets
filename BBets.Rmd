@@ -38,9 +38,6 @@ There are 3 questions and there should be at least 3 separate commits, at least 
 ```{r}
 URN = 1:365
 ```
-
-# What is Brownlow's average profit/loss
-
 ```{r}
 classSize = 35
 winAmount=1
@@ -62,15 +59,54 @@ hist(saveBank)
 ```{r}
 favstats(saveBank)
 ```
+
 The way to make this a fair bet is to change the loss bet, what Dr. Brownlow has to pay, to $4.35.
+
+# What is Brownlow's average profit/loss
+
+```{r}
+classSize = 35
+winAmount=1
+loseAmount= 2
+
+test = vector('numeric')
+saveBank=vector('numeric')
+for (j in 1:30){
+  bank=0
+for(i in 1:637){
+test = sample(URN, size=classSize, replace=TRUE)
+ifelse(length(unique(test))==classSize, (bank=bank-loseAmount),(bank=bank+winAmount))
+saveBank[j] = bank
+}
+}
+hist(saveBank)
+
+```
+```{r}
+favstats(saveBank)
+```
+
+Dr. Brownlow's average profit is $284.
 
 # What size of class makes the 2:1 bet fair?  
 <!--Explain and display the results of your method of coming up with the estimate of professor Brownlows betting profits!-->
 
 
+
+
+
 # In the class and payoff as described what is a 95% confidence interval for Brownlow's earnings?
   
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows winnings (or losings)-->
+
+```{r}
+sortedBank = sort(saveBank)
+lcl = sortedBank[25]
+ucl = sortedBank[975]
+print(paste(lcl, ucl))
+```
+
+The lower confidence intervals that Dr. J would win would be approximately `r lcl`, ucl is `r ucl`
 
 
 # Discussion and Conclusion
